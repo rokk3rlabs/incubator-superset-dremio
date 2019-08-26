@@ -35,6 +35,16 @@ RUN apt-get install -y build-essential libssl-dev \
 # Install extra useful tool for development
 RUN apt-get install -y vim less postgresql-client redis-tools
 
+# Install Linux ODBC 
+RUN apt-get install -y unixodbc unixodbc-dev
+RUN pip install pyodbc
+
+
+RUN curl -O https://download.dremio.com/odbc-driver/1.4.0.1000/dremio-odbc-1.4.0.1000-1.x86_64.rpm
+RUN apt-get install -y  alien
+RUN alien --scripts --to-deb dremio-odbc-1.4.0.1000-1.x86_64.rpm
+RUN dpkg -i dremio-odbc_1.4.0.1000-2_amd64.deb
+
 # Install nodejs for custom build
 # https://superset.incubator.apache.org/installation.html#making-your-own-build
 # https://nodejs.org/en/download/package-manager/
@@ -67,6 +77,8 @@ RUN cd superset/assets \
 
 COPY contrib/docker/docker-init.sh .
 COPY contrib/docker/docker-entrypoint.sh /entrypoint.sh
+COPY superset .
+
 ENTRYPOINT ["/entrypoint.sh"]
 
 HEALTHCHECK CMD ["curl", "-f", "http://localhost:8088/health"]

@@ -26,6 +26,7 @@ from contextlib2 import contextmanager
 from flask_babel import lazy_gettext as _
 import simplejson as json
 import sqlalchemy
+import sqlalchemy_dremio.pyodbc
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import NullPool
 

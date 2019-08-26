@@ -87,7 +87,11 @@ class SupersetDataFrame(object):
         self.column_names = dedup(column_names)
 
         data = data or []
-        self.df = pd.DataFrame(list(data), columns=self.column_names).infer_objects()
+        colcount = len(column_names)
+        rowcount = len(data)
+        data = np.reshape(data, (rowcount, colcount))
+
+        self.df = (pd.DataFrame(list(data), columns=self.column_names).infer_objects())
 
         self._type_dict = {}
         try:
