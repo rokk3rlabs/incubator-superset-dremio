@@ -56,3 +56,23 @@ class CeleryConfig(object):
 
 
 CELERY_CONFIG = CeleryConfig
+
+
+from flask_appbuilder.security.manager import AUTH_OAUTH
+AUTH_TYPE = AUTH_OAUTH
+OAUTH_PROVIDERS = [
+    {   'name':'graphpath',
+        'token_key':'access_token', 
+        'icon':'fa-address-card',  
+        'remote_app': {
+            'consumer_key': get_env_variable('AUTH_CLIENT_ID'),  
+            'consumer_secret': get_env_variable('AUTH_CLIENT_SECRET'),
+            'access_token_method': 'POST',
+            'access_token_url': get_env_variable('ACCESS_TOKEN_URL'),
+            'authorize_url': get_env_variable('AUTHORIZE_URL') + '?clientSecret' + get_env_variable('AUTH_CLIENT_SECRET')
+        }
+    }
+]
+
+from custom_sso_security_manager import CustomSecurityManager
+CUSTOM_SECURITY_MANAGER = CustomSecurityManager
