@@ -63,6 +63,8 @@ RUN pip install --upgrade setuptools pip \
 
 RUN pip install Flask-OAuthlib
 
+RUN pip install git+https://github.com/LuisagonzalezR3L/Flask-AppBuilder.git@master
+
 COPY --chown=superset:superset superset superset
 
 ENV PATH=/home/superset/superset/bin:$PATH \
