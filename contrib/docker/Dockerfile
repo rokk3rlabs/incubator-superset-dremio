@@ -80,6 +80,8 @@ RUN cd superset/assets \
 COPY contrib/docker/docker-init.sh .
 COPY contrib/docker/docker-entrypoint.sh /entrypoint.sh
 COPY superset .
+COPY contrib/docker/custom_sso_security_manager.py .
+COPY contrib/docker/superset_config.py .
 
 ENTRYPOINT ["/entrypoint.sh"]
 
