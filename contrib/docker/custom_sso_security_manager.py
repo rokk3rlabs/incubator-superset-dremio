@@ -12,7 +12,7 @@ class CustomSecurityManager(SupersetSecurityManager):
         })
         if response.status_code in 200: 
             user = response.json()["data"]
-            return userSuperset
+            return user
         return {}
 
     def auth_user_oauth (self, userInfo):
