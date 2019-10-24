@@ -1,24 +1,23 @@
 from flask import redirect, g, flash, request
 from superset.security import SupersetSecurityManager
-from flask_login import UserMixin
 import requests
 import os
 
-class User(UserMixin):
-    def __init__(self, user):
-        self.email = user["email"]
-        self.firstName = user["firstName"]
-        self.lastName = user["lastName"]
-        self.id = 1
-        self.roles = [{"name": "Admin", "id": 1}]
-
 class CustomSecurityManager(SupersetSecurityManager):
-    # GRAPHPATH FLOW
     def oauth_user_info(self, provider, response=None):
-        return {"email": "luisa.gonzalez@rokk3rlabs.com", "firstName": "luisa", "lastName": "gonzalez"}
-    def auth_user_oauth (self, userinfo):
-        return User(userinfo)
-    
+        response = requests.get(os.environ.get("AUTH_ME_URL"), headers = {
+            "Authorization": response["access_token"],
+            "x-client-id": os.environ.get("AUTH_CLIENT_ID"),
+            "x-client-secret": os.environ.get("AUTH_CLIENT_SECRET")
+        })
+        if response.status_code in 200: 
+            user = response.json()["data"]
+            return userSuperset
+        return {}
+
+    def auth_user_oauth (self, userInfo):
+        userSuperset = self.appbuilder.sm.find_user(email=userInfo["email"])
+        return userSuperset
     
     def load_user_from_request(self, header_val):  
         response = requests.get(os.environ.get("API_ME_URL"), headers = {
@@ -27,7 +26,9 @@ class CustomSecurityManager(SupersetSecurityManager):
             "x-client-secret": request.headers.get("x-client-secret")
         })
         if response.status_code is 200 :
-            return User(response.json()["data"])
+            user = response.json()["data"]
+            userSuperset = self.appbuilder.sm.find_user(email=user["email"])
+            return userSuperset
 
     def __init__(self, appbuilder):
         super(CustomSecurityManager, self).__init__(appbuilder)

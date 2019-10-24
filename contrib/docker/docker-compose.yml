@@ -57,6 +57,7 @@ services:
       AUTH_CLIENT_ID: auth-superset
       AUTHORIZE_URL: https://dev.graphpath.ai/oauth
       API_ME_URL: https://api-dev.graphpath.ai/api/v1/users/me
+      AUTH_ME_URL: https://api-dev.graphpath.ai/auth/v1/me
       
     user: root:root
     ports:
