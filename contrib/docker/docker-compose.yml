@@ -58,6 +58,7 @@ services:
       AUTHORIZE_URL: https://dev.graphpath.ai/oauth
       API_ME_URL: https://api-dev.graphpath.ai/api/v1/users/me
       AUTH_ME_URL: https://api-dev.graphpath.ai/auth/v1/me
+      ICON_URL: https://static.wixstatic.com/media/788d44_61d567d883284328bce7e362a7150ab4~mv2.png/v1/fill/w_210,h_49,al_c,q_80,usm_0.66_1.00_0.01/Logo%20Blanco%20transp.webp
       
     user: root:root
     ports:

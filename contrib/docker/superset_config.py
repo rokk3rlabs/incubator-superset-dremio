@@ -62,7 +62,7 @@ AUTH_TYPE = AUTH_OAUTH
 OAUTH_PROVIDERS = [
     {   'name':'graphpath',
         'token_key':'access_token', 
-        'icon':'fa-address-card',  
+        'icon_url': get_env_variable('ICON_URL'),
         'remote_app': {
             'consumer_key': get_env_variable('AUTH_CLIENT_ID'),  
             'consumer_secret': get_env_variable('AUTH_CLIENT_SECRET'),
