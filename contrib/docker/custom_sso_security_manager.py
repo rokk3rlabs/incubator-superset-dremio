@@ -10,8 +10,8 @@ class CustomSecurityManager(SupersetSecurityManager):
             "x-client-id": os.environ.get("AUTH_CLIENT_ID"),
             "x-client-secret": os.environ.get("AUTH_CLIENT_SECRET")
         })
-        if response.status_code in 200: 
-            user = response.json()["data"]
+        if response.status_code is 200: 
+            user = response.json()
             return user
         return {}
 
