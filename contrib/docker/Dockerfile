@@ -61,6 +61,10 @@ RUN pip install --upgrade setuptools pip \
     && pip install -r requirements.txt -r requirements-dev.txt -r requirements-extra.txt \
     && rm -rf /root/.cache/pip
 
+RUN pip install Flask-OAuthlib
+
+RUN pip install git+https://github.com/LuisagonzalezR3L/Flask-AppBuilder.git@master
+
 COPY --chown=superset:superset superset superset
 
 ENV PATH=/home/superset/superset/bin:$PATH \
@@ -76,6 +80,8 @@ RUN cd superset/assets \
 COPY contrib/docker/docker-init.sh .
 COPY contrib/docker/docker-entrypoint.sh /entrypoint.sh
 COPY superset .
+COPY contrib/docker/custom_sso_security_manager.py .
+COPY contrib/docker/superset_config.py .
 
 ENTRYPOINT ["/entrypoint.sh"]
 

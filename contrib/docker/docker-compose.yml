@@ -42,16 +42,24 @@ services:
       dockerfile: contrib/docker/Dockerfile
     restart: unless-stopped
     environment:
-      POSTGRES_DB: superset
+      POSTGRES_DB: superset-dev
       POSTGRES_USER: superset
       POSTGRES_PASSWORD: superset
-      POSTGRES_HOST: postgres
+      POSTGRES_HOST: 35.202.119.116
       POSTGRES_PORT: 5432
       REDIS_HOST: redis
       REDIS_PORT: 6379
       # If using production, comment development volume below
       SUPERSET_ENV: production
       #SUPERSET_ENV: development
+      ACCESS_TOKEN_URL: https://api-dev.graphpath.ai/auth/v1/oauth/token
+      AUTH_CLIENT_SECRET: auth-superset
+      AUTH_CLIENT_ID: auth-superset
+      AUTHORIZE_URL: https://dev.graphpath.ai/oauth
+      API_ME_URL: https://api-dev.graphpath.ai/api/v1/users/me
+      AUTH_ME_URL: https://api-dev.graphpath.ai/auth/v1/me
+      ICON_URL: https://static.wixstatic.com/media/788d44_61d567d883284328bce7e362a7150ab4~mv2.png/v1/fill/w_210,h_49,al_c,q_80,usm_0.66_1.00_0.01/Logo%20Blanco%20transp.webp
+      
     user: root:root
     ports:
       - 8088:8088
@@ -61,6 +69,7 @@ services:
     volumes:
       # this is needed to communicate with the postgres and redis services
       - ./superset_config.py:/home/superset/superset/superset_config.py
+      - ./custom_sso_security_manager.py:/home/superset/superset/custom_sso_security_manager.py
       # this is needed for development, remove with SUPERSET_ENV=production
       # - ../../superset:/home/superset/superset
 
